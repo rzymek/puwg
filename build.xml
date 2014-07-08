@@ -1,0 +1,9 @@
+<project name="mapgrid" default="build">
+	<property file="build.user.properties" />
+
+	<target name="build">
+		<jar destfile="puwg.jar" basedir="bin">
+		</jar>
+	</target>
+
+</project>

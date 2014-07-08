@@ -4,20 +4,10 @@ package org.openstreetmap.josm.data.projection;
 
 import static org.openstreetmap.josm.tools.I18n.tr;
 
-import java.awt.GridBagLayout;
-import java.awt.event.ActionListener;
-import java.util.Collection;
-import java.util.Collections;
-
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import org.openstreetmap.josm.data.Bounds;
 import org.openstreetmap.josm.data.coor.LatLon;
 import org.openstreetmap.josm.data.projection.datum.GRS80Datum;
 import org.openstreetmap.josm.data.projection.proj.ProjParameters;
-import org.openstreetmap.josm.tools.GBC;
 
 /**
  * PUWG 1992 and 2000 are the official cordinate systems in Poland.
@@ -25,7 +15,7 @@ import org.openstreetmap.josm.tools.GBC;
  *
  * @author steelman
  */
-public class Puwg extends AbstractProjection implements ProjectionSubPrefs {
+public class Puwg extends AbstractProjection {
 
     public static final int DEFAULT_ZONE = 0;
 
@@ -87,68 +77,6 @@ public class Puwg extends AbstractProjection implements ProjectionSubPrefs {
     @Override
     public Bounds getWorldBoundsLatLon() {
         return Zones[zone].getWorldBoundsLatLon();
-    }
-
-    @Override
-    public void setupPreferencePanel(JPanel p, ActionListener listener) {
-        JComboBox prefcb = new JComboBox(Puwg.Zones);
-
-        prefcb.setSelectedIndex(zone);
-        p.setLayout(new GridBagLayout());
-        p.add(new JLabel(tr("PUWG Zone")), GBC.std().insets(5,5,0,5));
-        p.add(GBC.glue(1, 0), GBC.std().fill(GBC.HORIZONTAL));
-        /* Note: we use component position 2 below to find this again */
-        p.add(prefcb, GBC.eop().fill(GBC.HORIZONTAL));
-        p.add(GBC.glue(1, 1), GBC.eol().fill(GBC.BOTH));
-
-        if (listener != null) {
-            prefcb.addActionListener(listener);
-        }
-    }
-
-    @Override
-    public Collection<String> getPreferences(JPanel p) {
-        Object prefcb = p.getComponent(2);
-        if(!(prefcb instanceof JComboBox))
-            return null;
-        int zone = ((JComboBox)prefcb).getSelectedIndex();
-        return Collections.singleton((Puwg.Zones[zone]).toCode());
-    }
-
-    @Override
-    public String[] allCodes() {
-        String[] zones = new String[Zones.length];
-        for (int zone = 0; zone < Zones.length; zone++) {
-            zones[zone] = Zones[zone].toCode();
-        }
-        return zones;
-    }
-
-    @Override
-    public Collection<String> getPreferencesFromCode(String code) {
-        for (PuwgData p : Puwg.Zones) {
-            if (code.equals(p.toCode()))
-                return Collections.singleton(code);
-        }
-        return null;
-    }
-
-    @Override
-    public void setPreferences(Collection<String> args) {
-        int z = DEFAULT_ZONE;
-        if (args != null) {
-            try {
-                for (String s : args) {
-                    for (int i=0; i < Zones.length; ++i)
-                        if (s.equals(Zones[i].toCode())) {
-                            z = i;
-                            break;
-                        }
-                    break;
-                }
-            } catch (NullPointerException e) {}
-        }
-        updateParameters(z);
     }
 }
 

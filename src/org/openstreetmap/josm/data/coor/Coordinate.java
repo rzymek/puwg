@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  * @author imi
  */
-abstract class Coordinate extends Point2D implements Serializable {
+abstract class Coordinate implements Serializable {
 
     protected double x;
     protected double y;
