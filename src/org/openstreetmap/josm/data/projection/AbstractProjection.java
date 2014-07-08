@@ -68,7 +68,7 @@ abstract public class AbstractProjection implements Projection {
 //            nadgrids.gridShiftReverse(gs);
 //            ll = new LatLon(ll.lat()+gs.getLatShiftDegrees(), ll.lon()+gs.getLonShiftPositiveEastDegrees());
 //        } else {
-            ll = datum.fromWGS84(ll);
+//            ll = datum.fromWGS84(ll);
 //        }
         double[] en = proj.project(Math.toRadians(ll.lat()), Math.toRadians(ll.lon() - lon_0));
         return new EastNorth(ellps.a * k_0 * en[0] + x_0, ellps.a * k_0 * en[1] + y_0);
@@ -83,7 +83,7 @@ abstract public class AbstractProjection implements Projection {
 //            nadgrids.gridShiftForward(gs);
 //            ll = new LatLon(ll.lat()+gs.getLatShiftDegrees(), ll.lon()+gs.getLonShiftPositiveEastDegrees());
 //        } else {
-            ll = datum.toWGS84(ll);
+//            ll = datum.toWGS84(ll);
 //        }
         return ll;
     }
